@@ -8,20 +8,117 @@ mycursor=mydb.cursor()
 mycursor.execute("CREATE DATABASE airline_resrvation;")
 
 mycursor.execute("""create table Flight(FLIGHT_ID INT(20) primary key, AIRLINE_ID int(20) NOT NULL, AIRLINE_NAME varchar(30) NOT NULL, 
-FROM_LOCATION varchar(30) NOT NULL, TO_LOCATION varchar(30) NOT NULL, DEPARTURE_TIME DATETIME NOT NULL, ARRIVAL_TIMA DATETIME NOT NULL,
- DURATION DATETIME NOT NULL, TOTAL_SEATS int(200) NOT NULL, );""")
+FROM_LOCATION varchar(30) NOT NULL, TO_LOCATION varchar(30) NOT NULL, DEPARTURE_TIME TIME NOT NULL, ARRIVAL_TIMA TIME NOT NULL,
+ DURATION TIME NOT NULL, TOTAL_SEATS int(200) NOT NULL, );""")
 
-mycursor.execute("""CREATE TABLE FLIGHT_DETAIS(FLIGHT_ID INT(20) PRIMARY KEY, FLIGHT_DEPARTURE_DATE DATE NOT NULL, PRICE INT(30) NOT NULL,
+mycursor.execute("""CREATE TABLE FLIGHT_DETAILS(FLIGHT_ID INT(20) PRIMARY KEY, FLIGHT_DEPARTURE_DATE DATE NOT NULL, PRICE INT(30) NOT NULL,
 AVAILABLE_SEATS INT(40) NOT NULL, FOREIGN KEY (FLIGHT_ID) REFERENCES FLIGHT(FLIGHT_ID));""")
 
 mycursor.execute("""CREATE TABLE PASSENGER_PROFILE(PASSENGER_ID INT(20) PRIMARY KEY, PASSWORD VARCHAR(30) NOT NULL, FIRST_NAME VARCHAR(90) NOT NULL, LAST_NAME VARCHAR(90), 
 ADDRESS VARCHAR(30) NOT NULL,MOBILE_NO INT(11) NOT NULL, EMAIL_ID VARCHAR(64));""" )
 
 mycursor.execute("""CREATE TABLE CREDIT_CARD_DETAILS(PASSENGER_ID INT(20) NOT NULL, CARD_NUMBER INT(20),
- CARD_TYPE VARCHAR(20) NOT NULL, EXPIRATION_MONTH VARCHAR(5) NOT NULL, EXPIRATION_YEAR VARCHAR(90)NOT NULL,
+ CARD_TYPE VARCHAR(20) NOT NULL, EXPIRATION_MONTH VARCHAR(5) NOT NULL, EXPIRATION_YEAR VARCHAR(90) NOT NULL,
   FOREIGN KEY (PASSENGER_ID) REFERENCES PASSENGER_PROFILE(PASSENGER_ID));""")
+mycursor.execute ("""CREATE TABLE TICKET_INFO(TICKET_ID INT PRIMARY KEY, 
+                                              PASSENGER_ID INT(20) NOT NULL REFERENCES PASSENGER_PROFILE(PASSENGER_ID), 
+                                              FLIGHT_ID INT(20) NOT NULL REFERENCES Flight(FLIGHT_ID),   
+                                              FLIGHT_DEPARTURE_DATE DATE NOT NULL REFERENCES flight_detais(FLIGHT_DEPARTURE_DATE), 
+                                              STATUS VARCHAR(20));""")
 
-mycursor.execute("""CREATE TABLE TICKET_INFO (TICKET_ID INT(20) NOT NULL, PASSENGER_ID INT(20), FLIGHT_ID INT(20), FLIGHT_DEPARTURE_DATE, STATUS VARCHAR(20)     
- FOREIGN KEY (PASSENGER_ID) REFERENCES PASSENGER_PROFILE(PASSENGER_ID),
- FOREIGN KEY (FLIGHT_ID) REFERENCES Flight(FLIGHT_ID),
- FOREIGN KEY (FLIGHT_DEPARTURE_DATE) REFERENCES FLIGHT_DETAILS(FLIGHT_DEPARTURE_DATE));""")
+
+def FLIGHT():
+
+    from datetime import datetime
+    import mysql.connector
+    mydb=mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="Rajveerjatin@1",
+    database="AIRLINE_RESrVATION"
+    )
+    mycursor=mydb.cursor()
+    FLIGHT_ID= int(input("ENTER flight id : "))
+    AIRLINE_ID= int(input("Enter air id : "))
+    AIRLINE_NAME = input("Enter airline name : ")
+    FROM_LOCATION = input("Enter LOCATION of sourse: ")
+    TO_LOCATION = input("enter location of destiny : ")
+    
+    Hours=input("enter hours of departure:" )
+    minnutes=input("enter mints of departure:" )
+    seconds=input("enter seconds of departure:" )
+    DEPARTURE_TIME= ("{}:{}:{}".format(Hours,minnutes,seconds))
+    HoursA=input("enter hours of ARRIVAl:" )
+    minnutesA=input("enter mints of ARRIVAl:" )
+    secondsA=input("enter seconds of ARRIVAl:" )
+    ARRIVAL_TIME=("{}:{}:{}".format(HoursA,minnutesA,secondsA))
+    HoursD=input("enter hours of DUARTION:" )
+    minnutesD=input("enter mints of DUARTION:" )
+    secondsD=input("enter seconds of DUARTION:" )
+    DURATION= ("{}:{}:{}".format(HoursD,minnutesD,secondsD))
+    TOTAL_SEATS=int(input("Enter total seats: "))
+
+    WALS=(FLIGHT_ID, AIRLINE_ID, AIRLINE_NAME, FROM_LOCATION, TO_LOCATION, TOTAL_SEATS, DEPARTURE_TIME, ARRIVAL_TIME, DURATION)
+
+    mycursor.execute("""insert into flight(FLIGHT_ID, AIRLINE_ID, AIRLINE_NAME,
+    FROM_LOCATION, TO_LOCATION, TOTAL_SEATS, DEPARTURE_TIME, ARRIVAL_TIME, DURATION) 
+    Values(%s,%s,%s,%s,%s,%s,%s,%s,%s);""",WALS)
+    print(WALS)
+    mydb.commit()
+
+
+
+def passenger_profile():
+
+    from datetime import datetime
+    import mysql.connector
+    mydb=mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="Rajveerjatin@1",
+    database="AIRLINE_RESrVATION"
+    )
+    mycursor=mydb.cursor()
+    MOBILE_NO= int(input("ENTER MOBILE NUMBER : "))
+    PASSENGER_ID= int(input("Enter PASSENGER ID : "))
+    PASSWORD = input("Enter PASSWORD : ")
+    FIRST_NAME = input("Enter FIRST_NAME: ")
+    LAST_NAME = input("enter LAST NAME : ")    
+    ADDRESS=input("enter ADDRESS:" )
+    EMAIL_ID=input("enter E-MAIL ID:" )
+    WALS=(PASSENGER_ID, PASSWORD, FIRST_NAME,
+    LAST_NAME, ADDRESS, MOBILE_NO, EMAIL_ID)
+
+    mycursor.execute("""insert into passenger_profile(PASSENGER_ID, PASSWORD, FIRST_NAME,
+    LAST_NAME, ADDRESS, MOBILE_NO, EMAIL_ID) 
+    Values(%s,%s,%s,%s,%s,%s,%s);""",WALS)
+    print(WALS)
+    mydb.commit()
+
+
+def credit_card_details():
+    from datetime import datetime
+    import mysql.connector
+    mydb=mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="Rajveerjatin@1",
+    database="AIRLINE_RESrVATION"
+    )
+    mycursor=mydb.cursor()
+    PASSENGER_ID= int(input("ENTER  PASSENGER_ID: "))
+    CARD_NUMBER = int(input("Enter PASSWORD CARD_NUMBER : "))
+    CARD_TYPE = input("Enter CARD_TYPE: ")
+    EXPIRATION_MONTH = input("enter EXPIRATION_MONTH : ")    
+    EXPIRATION_YEAR=input("enter EXPIRATION_YEAR:" )
+    
+    WALS=(PASSENGER_ID, CARD_NUMBER, CARD_TYPE,
+    EXPIRATION_MONTH, EXPIRATION_YEAR)
+
+    mycursor.execute("""insert into credit_card_details(PASSENGER_ID, CARD_NUMBER, CARD_TYPE,
+    EXPIRATION_MONTH, EXPIRATION_YEAR) 
+    Values(%s,%s,%s,%s,%s);""",WALS)
+    print(WALS)
+    mydb.commit()
+
+
