@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    body{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+    background: url('image/1.jpg');
+     width: 80px;
+     height: 80px;
+     width: 20px;
+    z-index: -10;
+    }
+    .signup{
+        background: rgba(44,62,80,0.7); 
+    padding: 45px;
+    width: 263px;
+    margin: 150px;
+    margin-top: 120px;
+    height: 320px;
+    margin-left: 350px;
+    z-index: 1;
+    }
+    form{
+        width: 240px;
+        text-align: center;
+        padding: 0px 0px;
+        font-weight: 200px;
+        z-index: 1;
+    }
+    input
+    {
+       width: 240px;
+    text-align: center;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #fff ;
+    font-family: 'Play', sans-serif;
+    font-size: 18px;
+    font-weight: 200px;
+    padding: 10px 0;
+    transition: border 0.5s;
+    outline:none;
+    color: #fff;
+    margin: 5px;
+    }
+    h2{
+        color: #000;
+        height: 0px 0px;
+        padding: 0px;
+    }
+    input[type=button]
+{
+    border: none;
+    width: 190px;
+    background: white;
+    color: #000;
+    font-size: 16px;
+    line-height: 25px;
+    padding: 10px 0;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 25px;
+}
+input[type=button]:hover
+{
+    color: #fff;
+    background-color: black;
+}
+    ::placeholder{
+    color: aliceblue;
+    opacity: 0.8px;
+}
+a{
+    color: yellow;
+    margin: 0px 11px;
+    padding: 0px 0px;
+}
+span {
+    color: black;
+}
+</style>
+<body>
+    <div id="error"></div>
+    <div class="signup">
+        <form id="form" action="/abc.txt"name="myform" onsubmit="return validation()" method="POST" >
+            <h1 style="color: red;">Airline Ticket</h1>
+            <h3> <span><b>From</b>&nbsp;&nbsp;</span>: Amritsar</h3> 
+            <h3> <span><b>To</b></span>&nbsp;&nbsp;: Manali</h3> 
+            <h3> <span><b>class</b></span>&nbsp;&nbsp;: Economic</h3> 
+            <h3> <span><b>Arrival Date</b></span>&nbsp;&nbsp;: 31 DEC 2021</h3> 
+            <h3> <span><b>Price</b></span>&nbsp;&nbsp;: 1600</h3> 
+            <h3> <span><b>Ticket Satus</b></span>&nbsp;&nbsp;: Confirm</h3> 
+            <!-- <input type="button" value="Sign up" onclick="alert ('Congratulation you are now member of MK Airlines')"> -->
+            <!-- <a href="index.html"style="margin-right:0px; font-size:13px; font-family:Tahoma,Geneva, sans-serif:">Go back to Home page</a> -->
+        </form>
+    </div>
+</body>
+</html>
